@@ -1,0 +1,7 @@
+# Directories
+.vs/
+Debug/
+OpenGL_Assignment_REWORKED/Debug
+
+# Files
+*.user
