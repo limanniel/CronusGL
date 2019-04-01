@@ -33,24 +33,12 @@ Application::Application(int argc, char* argv[])
 	glDepthFunc(GL_LESS);
 	glEnable(GL_CULL_FACE);
 
+	// VAO Init
 	glGenVertexArrays(1, &VertexArrayID);
 	glBindVertexArray(VertexArrayID);
 
+	// Load Shaders
 	programID = ShaderLoader::LoadShaders("src/shaders/SimpleVertexShader.vert", "src/shaders/SimpleFragmentShader.frag");
-
-	// Matrix Set-up
-	MatrixID = glGetUniformLocation(programID, "MVP");
-	ProjectionMatrix = glm::perspective(glm::radians(45.0f), 4.0f / 3.0f, 0.1f, 100.0f);
-	//ProjectionMatrix = glm::ortho(-10.0f, 10.0f, -10.0f, 10.0f, 0.0f, 100.0f);
-	ViewMatrix = glm::lookAt(
-		glm::vec3(4,3,3),
-		glm::vec3(0,0,0),
-		glm::vec3(0,1,0)
-	);
-	glm::vec3 ScaleVector = glm::vec3(0.05, 0.05, 0.05);
-	ModelMatrix = glm::mat4(1.0f);
-	ModelMatrix = glm::scale(ModelMatrix, ScaleVector);
-	MVP = ProjectionMatrix * ViewMatrix * ModelMatrix;
 
 	InitObject();
 
@@ -60,6 +48,11 @@ Application::Application(int argc, char* argv[])
 
 Application::~Application()
 {
+	delete model;
+	model = nullptr;
+	delete object;
+	object = nullptr;
+
 	glDeleteProgram(programID);
 	glDeleteVertexArrays(1, &VertexArrayID);
 }
@@ -68,9 +61,6 @@ void Application::Display()
 {
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 	/////////////////////////////
-
-	glUseProgram(programID);
-	glUniformMatrix4fv(MatrixID, 1, GL_FALSE, &MVP[0][0]);
 
 	object->Draw();
 
@@ -97,8 +87,9 @@ void Application::Keyboard(unsigned char key, int x, int y)
 void Application::InitObject()
 {
 	model = new Model;
-	model->Mesh = MeshLoaderOBJ::Load("res/models/cat.obj");
-	model->TextureID = tex.Load("res/textures/Cat_diffuse.bmp");
+	model->Mesh = MeshLoaderOBJ::Load("res/models/cube.obj");
+	model->TextureID = tex.Load("res/textures/uvtemplate.bmp");
 
-	object = new StaticObject(model);
+
+	object = new StaticObject(programID, model, vec3(0.0f, 0.0f, -10.0f), Rotation(-55.0f, 1.0f, 0.5f, 0.0f));
 }

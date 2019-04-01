@@ -4,8 +4,6 @@
 #include <freeglut.h>
 #include <iostream>
 
-#include <glm.hpp>
-#include <matrix_transform.hpp>
 
 #include "GLUTCallbacks.h"
 #include "ShaderLoader.h"
@@ -13,6 +11,8 @@
 #include "MeshLoaderOBJ.h"
 
 #include "StaticObject.h"
+
+#define AMOUNT_OF_CUBES 5
 
 class Application
 {
@@ -27,12 +27,6 @@ private:
 
 	// Buffers
 	GLuint VertexArrayID;
-
-	// Matrices
-	glm::mat4 ProjectionMatrix;
-	glm::mat4 ViewMatrix;
-	glm::mat4 ModelMatrix;
-	glm::mat4 MVP;
 
 	//Object
 	LoadTexture2DBMP tex;

@@ -4,17 +4,23 @@
 #include <vector>
 #include "glew.h"
 
-struct Vector3
+struct Rotation
 {
-	float x;
-	float y;
-	float z;
-};
+	float Angle;
+	glm::vec3 Axis;
 
-struct TexCoord
-{
-	GLfloat u;
-	GLfloat v;
+	// Default Values
+	Rotation() {
+		Angle = 0.0f;
+		Axis.x = 1.0f; Axis.y = 1.0f; Axis.z = 1.0f;
+	}
+	// Parameterised Constructor
+	Rotation(float angle, float x, float y, float z) {
+		Angle = angle;
+		Axis.x = x;
+		Axis.y = y;
+		Axis.z = z;
+	}
 };
 
 struct Mesh 

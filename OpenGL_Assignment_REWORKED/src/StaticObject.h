@@ -5,12 +5,11 @@
 class StaticObject : public SceneObject
 {
 private:
-	Model* _model;
-	GLuint vertexBuffer;
-	GLuint uvBuffer;
+	vec3 _position;
+	Rotation _rotation;
 
 public:
-	StaticObject(Model* model);
+	StaticObject(GLuint programID, Model* model, vec3 position, Rotation = Rotation());
 	~StaticObject();
 
 	void Update();
