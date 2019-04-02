@@ -33,5 +33,5 @@ struct Mesh
 struct Model 
 {
 	Mesh* Mesh;
-	GLuint TextureID;
+	GLuint Texture;
 };

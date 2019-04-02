@@ -8,8 +8,12 @@ StaticObject::StaticObject(GLuint programID, Model* model, vec3 position, Rotati
 	_programID = programID;
 	_position = position;
 	_rotation = rotation;
-	_matrixID = glGetUniformLocation(programID, "MVP"); // Handle to shader, to pass MVP matrix in
 
+	// Handles to shaders
+	_matrixID = glGetUniformLocation(_programID, "MVP"); // MVP Handle
+	_textureID = glGetUniformLocation(_programID, "myTextureSampler"); // Texture Samples Handle
+
+	// Buffer Gen
 	glGenBuffers(1, &_vertexBuffer);
 	glBindBuffer(GL_ARRAY_BUFFER, _vertexBuffer);
 	glBufferData(GL_ARRAY_BUFFER, _model->Mesh->Vertices.size() * sizeof(vec3), &_model->Mesh->Vertices[0], GL_STATIC_DRAW);
@@ -18,6 +22,7 @@ StaticObject::StaticObject(GLuint programID, Model* model, vec3 position, Rotati
 	glBindBuffer(GL_ARRAY_BUFFER, _uvBuffer);
 	glBufferData(GL_ARRAY_BUFFER, _model->Mesh->UVCoords.size() * sizeof(vec2), &_model->Mesh->UVCoords[0], GL_STATIC_DRAW);
 
+	// MVP Matrix Compute
 	_modelMatrix = rotate(_modelMatrix, radians(_rotation.Angle), _rotation.Axis);
 	_viewMatrix = translate(_viewMatrix, _position);
 	_MVP = _projectionMatrix * _viewMatrix * _modelMatrix;
@@ -41,8 +46,8 @@ void StaticObject::Draw()
 
 	// Texture
 	glActiveTexture(GL_TEXTURE0);
-	glBindTexture(GL_TEXTURE_2D, _model->TextureID);
-	glUniform1i(_model->TextureID, 0);
+	glBindTexture(GL_TEXTURE_2D, _model->Texture);
+	glUniform1i(_textureID, 0);
 
 	// Vertices
 	glEnableVertexAttribArray(0);

@@ -54,6 +54,7 @@ Application::~Application()
 	object = nullptr;
 
 	glDeleteProgram(programID);
+	glDeleteTextures(1, &model->Texture);
 	glDeleteVertexArrays(1, &VertexArrayID);
 }
 
@@ -64,7 +65,7 @@ void Application::Display()
 
 	object->Draw();
 
-	glBindTexture(GL_TEXTURE_2D, 0);
+	// Rebind Buffer to nothing
 	glBindBuffer(GL_ARRAY_BUFFER, 0);
 
 	/////////////////////////////
@@ -88,8 +89,7 @@ void Application::InitObject()
 {
 	model = new Model;
 	model->Mesh = MeshLoaderOBJ::Load("res/models/cube.obj");
-	model->TextureID = tex.Load("res/textures/uvtemplate.bmp");
-
+	model->Texture = tex.Load("res/textures/uvtemplate.bmp");
 
 	object = new StaticObject(programID, model, vec3(0.0f, 0.0f, -10.0f), Rotation(-55.0f, 1.0f, 0.5f, 0.0f));
 }

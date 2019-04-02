@@ -19,6 +19,7 @@ protected:
 	Model* _model;
 	GLuint _programID;
 	GLuint _matrixID;
+	GLuint  _textureID;
 	GLuint _vertexBuffer;
 	GLuint _uvBuffer;
 

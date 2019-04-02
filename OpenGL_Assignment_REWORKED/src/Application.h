@@ -4,7 +4,6 @@
 #include <freeglut.h>
 #include <iostream>
 
-
 #include "GLUTCallbacks.h"
 #include "ShaderLoader.h"
 #include "LoadTexture2DBMP.h"
@@ -23,7 +22,6 @@ private:
 	// Shader
 	GLuint programID;
 	GLuint MatrixID;
-	GLuint TextureID;
 
 	// Buffers
 	GLuint VertexArrayID;
