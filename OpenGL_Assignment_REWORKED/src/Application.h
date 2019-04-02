@@ -19,9 +19,8 @@ private:
 	//GLUT
 	const int RefreshRate;
 
-	// Shader
+	// Shader Program
 	GLuint programID;
-	GLuint MatrixID;
 
 	// Buffers
 	GLuint VertexArrayID;

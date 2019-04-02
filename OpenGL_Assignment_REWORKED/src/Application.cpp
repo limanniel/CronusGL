@@ -11,7 +11,7 @@ Application::Application(int argc, char* argv[])
 	glutInitContextProfile(GLUT_CORE_PROFILE); // Switch to CORE profile from Debug
 	glutInitWindowSize(800, 800);
 	glutInitWindowPosition(500, 130);
-	glutCreateWindow("OpenGL Destroyer");
+	glutCreateWindow("CronusGL");
 
 	// GLUT sub-systems init
 	glutKeyboardFunc(GLUTCallbacks::Keyboard);
