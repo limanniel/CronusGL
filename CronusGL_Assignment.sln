@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.28307.489
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "OpenGL_Assignment_REWORKED", "OpenGL_Assignment_REWORKED\OpenGL_Assignment_REWORKED.vcxproj", "{7A284D1C-8A6A-4AB4-990D-132E2DDC11A3}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "CronusGL_Assignment", "CronusGL_Assignment\CronusGL_Assignment.vcxproj", "{7A284D1C-8A6A-4AB4-990D-132E2DDC11A3}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

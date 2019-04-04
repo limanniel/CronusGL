@@ -23,6 +23,7 @@
     <ProjectGuid>{7A284D1C-8A6A-4AB4-990D-132E2DDC11A3}</ProjectGuid>
     <RootNamespace>OpenGLAssignmentREWORKED</RootNamespace>
     <WindowsTargetPlatformVersion>10.0.17763.0</WindowsTargetPlatformVersion>
+    <ProjectName>CronusGL_Assignment</ProjectName>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
