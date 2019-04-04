@@ -14,29 +14,29 @@
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
     <Filter Include="Source Files\Shaders">
-      <UniqueIdentifier>{dc006b9f-0c85-4ecc-aa0a-906e5b3e1e0d}</UniqueIdentifier>
+      <UniqueIdentifier>{957a73cc-e0f2-4f2d-ac4e-54250b7480eb}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="src\main.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="src\Application.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="src\GLUTCallbacks.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\ShaderLoader.cpp">
+    <ClCompile Include="src\LoadTexture2DBMP.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\main.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="src\MeshLoaderOBJ.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\LoadTexture2DBMP.cpp">
+    <ClCompile Include="src\SceneObject.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\SceneObject.cpp">
+    <ClCompile Include="src\ShaderLoader.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="src\StaticObject.cpp">
@@ -50,22 +50,22 @@
     <ClInclude Include="src\GLUTCallbacks.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\ShaderLoader.h">
+    <ClInclude Include="src\LoadTexture2DBMP.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="src\MeshLoaderOBJ.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\Structures.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\LoadTexture2DBMP.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="src\SceneObject.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="src\ShaderLoader.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
     <ClInclude Include="src\StaticObject.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Structures.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
@@ -76,10 +76,5 @@
     <None Include="src\shaders\SimpleVertexShader.vert">
       <Filter>Source Files\Shaders</Filter>
     </None>
-  </ItemGroup>
-  <ItemGroup>
-    <Image Include="res\textures\Penguins.bmp">
-      <Filter>Resource Files</Filter>
-    </Image>
   </ItemGroup>
 </Project>

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<Project DefaultTargets="Build" ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup Label="ProjectConfigurations">
     <ProjectConfiguration Include="Debug|Win32">
       <Configuration>Debug</Configuration>
@@ -19,36 +19,35 @@
     </ProjectConfiguration>
   </ItemGroup>
   <PropertyGroup Label="Globals">
-    <VCProjectVersion>15.0</VCProjectVersion>
-    <ProjectGuid>{7A284D1C-8A6A-4AB4-990D-132E2DDC11A3}</ProjectGuid>
-    <RootNamespace>OpenGLAssignmentREWORKED</RootNamespace>
-    <WindowsTargetPlatformVersion>10.0.17763.0</WindowsTargetPlatformVersion>
-    <ProjectName>CronusGL_Assignment</ProjectName>
+    <VCProjectVersion>16.0</VCProjectVersion>
+    <ProjectGuid>{DF86F328-1017-4DCF-955B-A3BC6E777575}</ProjectGuid>
+    <RootNamespace>CronusGLAssignment</RootNamespace>
+    <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
-    <PlatformToolset>v141</PlatformToolset>
+    <PlatformToolset>v142</PlatformToolset>
     <CharacterSet>MultiByte</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>false</UseDebugLibraries>
-    <PlatformToolset>v141</PlatformToolset>
+    <PlatformToolset>v142</PlatformToolset>
     <WholeProgramOptimization>true</WholeProgramOptimization>
     <CharacterSet>MultiByte</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
-    <PlatformToolset>v141</PlatformToolset>
+    <PlatformToolset>v142</PlatformToolset>
     <CharacterSet>MultiByte</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>false</UseDebugLibraries>
-    <PlatformToolset>v141</PlatformToolset>
+    <PlatformToolset>v142</PlatformToolset>
     <WholeProgramOptimization>true</WholeProgramOptimization>
     <CharacterSet>MultiByte</CharacterSet>
   </PropertyGroup>
@@ -77,13 +76,13 @@
       <Optimization>Disabled</Optimization>
       <SDLCheck>true</SDLCheck>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>$(projectDir)libs\GLM\gtc;$(ProjectDir)libs\GLM;$(ProjectDir)libs\GLEW\include\GL;$(ProjectDir)libs\freeglut\include\GL;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir)libs\GLM\include\gtx;$(ProjectDir)libs\GLM\include\gtc;$(ProjectDir)libs\GLM\include;$(ProjectDir)libs\GLEW\include\GL;$(ProjectDir)libs\FreeGLUT\include\GL;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>GLEW_STATIC;_MBCS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ClCompile>
     <Link>
-      <AdditionalLibraryDirectories>$(ProjectDir)libs\GLEW\lib\Release\Win32;$(ProjectDir)libs\freeglut\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <AdditionalDependencies>glew32s.lib;freeglut.lib;opengl32.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <SubSystem>Console</SubSystem>
+      <AdditionalLibraryDirectories>$(ProjectDir)libs\GLEW;$(ProjectDir)libs\FreeGLUT;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>glew32s.lib;freeglut.lib;opengl32.lib;glu32.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
@@ -93,6 +92,9 @@
       <SDLCheck>true</SDLCheck>
       <ConformanceMode>true</ConformanceMode>
     </ClCompile>
+    <Link>
+      <SubSystem>Console</SubSystem>
+    </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <ClCompile>
@@ -102,15 +104,15 @@
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <SDLCheck>true</SDLCheck>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>$(projectDir)libs\GLM\gtc;$(ProjectDir)libs\GLM;$(ProjectDir)libs\GLEW\include\GL;$(ProjectDir)libs\freeglut\include\GL;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir)libs\GLM\include\gtx;$(ProjectDir)libs\GLM\include\gtc;$(ProjectDir)libs\GLM\include;$(ProjectDir)libs\GLEW\include\GL;$(ProjectDir)libs\FreeGLUT\include\GL;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>GLEW_STATIC;_MBCS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ClCompile>
     <Link>
+      <SubSystem>Console</SubSystem>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
-      <AdditionalLibraryDirectories>$(ProjectDir)libs\GLEW\lib\Release\Win32;$(ProjectDir)libs\freeglut\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <AdditionalDependencies>glew32s.lib;freeglut.lib;opengl32.lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <SubSystem>Console</SubSystem>
+      <AdditionalLibraryDirectories>$(ProjectDir)libs\GLEW;$(ProjectDir)libs\FreeGLUT;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>glew32s.lib;freeglut.lib;opengl32.lib;glu32.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
@@ -123,36 +125,34 @@
       <ConformanceMode>true</ConformanceMode>
     </ClCompile>
     <Link>
+      <SubSystem>Console</SubSystem>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="src\SceneObject.cpp" />
-    <ClCompile Include="src\LoadTexture2DBMP.cpp" />
-    <ClCompile Include="src\MeshLoaderOBJ.cpp" />
-    <ClCompile Include="src\ShaderLoader.cpp" />
     <ClCompile Include="src\Application.cpp" />
     <ClCompile Include="src\GLUTCallbacks.cpp" />
+    <ClCompile Include="src\LoadTexture2DBMP.cpp" />
     <ClCompile Include="src\main.cpp" />
+    <ClCompile Include="src\MeshLoaderOBJ.cpp" />
+    <ClCompile Include="src\SceneObject.cpp" />
+    <ClCompile Include="src\ShaderLoader.cpp" />
     <ClCompile Include="src\StaticObject.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="src\SceneObject.h" />
-    <ClInclude Include="src\LoadTexture2DBMP.h" />
-    <ClInclude Include="src\MeshLoaderOBJ.h" />
-    <ClInclude Include="src\ShaderLoader.h" />
     <ClInclude Include="src\Application.h" />
     <ClInclude Include="src\GLUTCallbacks.h" />
-    <ClInclude Include="src\Structures.h" />
+    <ClInclude Include="src\LoadTexture2DBMP.h" />
+    <ClInclude Include="src\MeshLoaderOBJ.h" />
+    <ClInclude Include="src\SceneObject.h" />
+    <ClInclude Include="src\ShaderLoader.h" />
     <ClInclude Include="src\StaticObject.h" />
+    <ClInclude Include="src\Structures.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="src\shaders\SimpleFragmentShader.frag" />
     <None Include="src\shaders\SimpleVertexShader.vert" />
-  </ItemGroup>
-  <ItemGroup>
-    <Image Include="res\textures\Penguins.bmp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
