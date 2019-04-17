@@ -8,10 +8,10 @@
 #include "ShaderLoader.h"
 #include "LoadTexture2DBMP.h"
 #include "MeshLoaderOBJ.h"
+#include "Camera.h"
 
 #include "StaticObject.h"
 
-#define AMOUNT_OF_CUBES 5
 
 class Application
 {
@@ -19,11 +19,21 @@ private:
 	//GLUT
 	const int RefreshRate;
 
-	// Shader Program
-	GLuint programID;
+	// ID's
+	GLuint _programID;
+	GLuint _matrixID;
+	GLuint _textureID;
 
 	// Buffers
 	GLuint VertexArrayID;
+
+	// Matrices
+	glm::mat4 _viewMatrix;
+	glm::mat4 _projectionMatrix;
+	glm::mat4 _MVP;
+
+	// Camera
+	Camera* camera;
 
 	//Object
 	LoadTexture2DBMP tex;

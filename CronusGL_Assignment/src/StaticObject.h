@@ -9,7 +9,7 @@ private:
 	Rotation _rotation;
 
 public:
-	StaticObject(GLuint programID, Model* model, vec3 position, Rotation = Rotation());
+	StaticObject(Model* model, vec3 position, Rotation = Rotation());
 	~StaticObject();
 
 	void Update();

@@ -38,7 +38,17 @@ Application::Application(int argc, char* argv[])
 	glBindVertexArray(VertexArrayID);
 
 	// Load Shaders
-	programID = ShaderLoader::LoadShaders("src/shaders/SimpleVertexShader.vert", "src/shaders/SimpleFragmentShader.frag");
+	_programID = ShaderLoader::LoadShaders("src/shaders/SimpleVertexShader.vert", "src/shaders/SimpleFragmentShader.frag");
+
+	// Camera and MVP set up
+	_projectionMatrix = glm::mat4(1.0f);
+
+	camera = new Camera;
+	_viewMatrix = camera->GetViewMatrix();
+
+	_projectionMatrix = perspective(radians(45.0f), 4.0f / 3.0f, 0.1f, 100.0f);
+	_matrixID = glGetUniformLocation(_programID, "MVP"); // MVP Handle
+	_textureID = glGetUniformLocation(_programID, "myTextureSampler"); // Texture Samples Handle
 
 	InitObject();
 
@@ -53,15 +63,19 @@ Application::~Application()
 	delete object;
 	object = nullptr;
 
-	glDeleteProgram(programID);
-	glDeleteTextures(1, &model->Texture);
+	glDeleteProgram(_programID);
 	glDeleteVertexArrays(1, &VertexArrayID);
 }
 
 void Application::Display()
 {
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+
 	/////////////////////////////
+
+	glUseProgram(_programID);
+	glUniformMatrix4fv(_matrixID, 1, GL_FALSE, value_ptr(_MVP)); // Transfer MVP data onto shader
+	glUniform1i(_textureID, 0);
 
 	object->Draw();
 
@@ -75,14 +89,16 @@ void Application::Display()
 
 void Application::Update()
 {
+	camera->Update();
 	object->Update();
+	_MVP = _projectionMatrix * camera->GetViewMatrix() * object->GetModelMatrix();
 
 	glutPostRedisplay();
 }
 
 void Application::Keyboard(unsigned char key, int x, int y)
 {
-	
+	camera->UpdateCameraPosition(key);
 }
 
 void Application::InitObject()
@@ -91,5 +107,5 @@ void Application::InitObject()
 	model->Mesh = MeshLoaderOBJ::Load("res/models/cube.obj");
 	model->Texture = tex.Load("res/textures/uvtemplate.bmp");
 
-	object = new StaticObject(programID, model, vec3(0.0f, 0.0f, -10.0f), Rotation(-55.0f, 1.0f, 0.5f, 0.0f));
+	object = new StaticObject(model, vec3(0.0f, 0.0f, -5.0f), Rotation(-55.0f, 1.0f, 0.0f, 0.0f));
 }

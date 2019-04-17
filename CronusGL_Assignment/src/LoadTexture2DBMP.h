@@ -50,5 +50,4 @@ public:
 	~LoadTexture2DBMP();
 
 	GLuint Load(const char* path);
-	//inline GLuint GetID() const { return m_ID; }
 };

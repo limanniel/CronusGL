@@ -2,16 +2,11 @@
 
 
 
-StaticObject::StaticObject(GLuint programID, Model* model, vec3 position, Rotation rotation) : SceneObject(programID, model)
+StaticObject::StaticObject(Model* model, vec3 position, Rotation rotation) : SceneObject(model)
 {
 	_model = model;
-	_programID = programID;
 	_position = position;
 	_rotation = rotation;
-
-	// Handles to shaders
-	_matrixID = glGetUniformLocation(_programID, "MVP"); // MVP Handle
-	_textureID = glGetUniformLocation(_programID, "myTextureSampler"); // Texture Samples Handle
 
 	// Buffer Gen
 	glGenBuffers(1, &_vertexBuffer);
@@ -23,9 +18,8 @@ StaticObject::StaticObject(GLuint programID, Model* model, vec3 position, Rotati
 	glBufferData(GL_ARRAY_BUFFER, _model->Mesh->UVCoords.size() * sizeof(vec2), &_model->Mesh->UVCoords[0], GL_STATIC_DRAW);
 
 	// MVP Matrix Compute
+	_modelMatrix = translate(_modelMatrix, _position);
 	_modelMatrix = rotate(_modelMatrix, radians(_rotation.Angle), _rotation.Axis);
-	_viewMatrix = translate(_viewMatrix, _position);
-	_MVP = _projectionMatrix * _viewMatrix * _modelMatrix;
 }
 
 
@@ -41,13 +35,9 @@ void StaticObject::Update()
 
 void StaticObject::Draw()
 {
-	glUseProgram(_programID);
-	glUniformMatrix4fv(_matrixID, 1, GL_FALSE, value_ptr(_MVP)); // Transfer MVP data onto shader+
-
 	// Texture
 	glActiveTexture(GL_TEXTURE0);
 	glBindTexture(GL_TEXTURE_2D, _model->Texture);
-	glUniform1i(_textureID, 0);
 
 	// Vertices
 	glEnableVertexAttribArray(0);
