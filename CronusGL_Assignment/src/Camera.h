@@ -5,7 +5,9 @@
 class Camera
 {
 private:
-	float _cameraSpeed;
+	float _cameraSpeed, _cameraSensitivity;
+	float _cameraPitch, _cameraYaw;
+	float _lastMouseX, _lastMouseY;
 
 	glm::vec3 _cameraPosition;
 	glm::vec3 _cameraFront;
@@ -16,8 +18,9 @@ public:
 	Camera();
 	~Camera();
 
-	void Update();
+	void Update(float deltaTime);
 	void UpdateCameraPosition(unsigned char key);
+	void UpdateCameraDirection(int x, int y);
 
 	inline glm::mat4 GetViewMatrix() const { return _viewMatrix; }
 };

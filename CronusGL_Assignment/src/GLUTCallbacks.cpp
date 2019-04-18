@@ -31,4 +31,8 @@ namespace GLUTCallbacks
 	{
 		app->Keyboard(key, x, y);
 	}
+	void PassiveMouse(int x, int y)
+	{
+		app->PassiveMouse(x, y);
+	}
 }

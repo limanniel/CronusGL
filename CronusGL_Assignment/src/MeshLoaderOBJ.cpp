@@ -82,11 +82,8 @@ namespace MeshLoaderOBJ
 			glm::vec2 uv = temp_uvs[uvIndex - 1];
 			glm::vec3 normal = temp_normals[normalIndex - 1];
 
-			//out_vertices.push_back(vertex);
 			mesh->Vertices.push_back(vertex);
-			//out_uvs.push_back(uv);
 			mesh->UVCoords.push_back(uv);
-			//out_normals.push_back(normal);
 			mesh->Normals.push_back(normal);
 		}
 		

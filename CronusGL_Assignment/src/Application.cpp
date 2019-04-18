@@ -1,7 +1,7 @@
 #include "Application.h"
 
 Application::Application(int argc, char* argv[])
-	: RefreshRate(16)
+	: RefreshRate(16), deltaTime(0.0f), lastFrame(0.0f), model(nullptr), object(nullptr)
 {
 	// GLUT Init
 	GLUTCallbacks::Init(this);
@@ -17,6 +17,8 @@ Application::Application(int argc, char* argv[])
 	glutKeyboardFunc(GLUTCallbacks::Keyboard);
 	glutDisplayFunc(GLUTCallbacks::Display);
 	glutTimerFunc(RefreshRate, GLUTCallbacks::Timer, RefreshRate);
+	glutPassiveMotionFunc(GLUTCallbacks::PassiveMouse);
+	glutSetCursor(GLUT_CURSOR_NONE);
 	std::cout << "GLUT initialised successfully!" << std::endl;
 
 	// GLEW Init
@@ -37,18 +39,18 @@ Application::Application(int argc, char* argv[])
 	glGenVertexArrays(1, &VertexArrayID);
 	glBindVertexArray(VertexArrayID);
 
-	// Load Shaders
+	// Load Shader
 	_programID = ShaderLoader::LoadShaders("src/shaders/SimpleVertexShader.vert", "src/shaders/SimpleFragmentShader.frag");
 
-	// Camera and MVP set up
-	_projectionMatrix = glm::mat4(1.0f);
-
+	// Camera and and Projection Set-Up
 	camera = new Camera;
-	_viewMatrix = camera->GetViewMatrix();
-
+	_projectionMatrix = glm::mat4(1.0f);
 	_projectionMatrix = perspective(radians(45.0f), 4.0f / 3.0f, 0.1f, 100.0f);
-	_matrixID = glGetUniformLocation(_programID, "MVP"); // MVP Handle
-	_textureID = glGetUniformLocation(_programID, "myTextureSampler"); // Texture Samples Handle
+	_MVP = glm::mat4(1.0f);
+
+	// Handlers to Shaders
+	_matrixID = glGetUniformLocation(_programID, "MVP");
+	_textureID = glGetUniformLocation(_programID, "myTextureSampler"); 
 
 	InitObject();
 
@@ -60,6 +62,8 @@ Application::~Application()
 {
 	delete model;
 	model = nullptr;
+	delete camera;
+	camera = nullptr;
 	delete object;
 	object = nullptr;
 
@@ -89,7 +93,13 @@ void Application::Display()
 
 void Application::Update()
 {
-	camera->Update();
+	// Get Delta Time
+	float currentTime = glutGet(GLUT_ELAPSED_TIME);
+	deltaTime = currentTime - lastFrame;
+	lastFrame = currentTime;
+
+	// Update Objects state and create MVP Matrix
+	camera->Update(deltaTime);
 	object->Update();
 	_MVP = _projectionMatrix * camera->GetViewMatrix() * object->GetModelMatrix();
 
@@ -99,13 +109,25 @@ void Application::Update()
 void Application::Keyboard(unsigned char key, int x, int y)
 {
 	camera->UpdateCameraPosition(key);
+
+	// Close app when ESC is pressed
+	if (key == 27) {
+		glutLeaveMainLoop();
+	}
+}
+
+void Application::PassiveMouse(int x, int y)
+{
+
+	camera->UpdateCameraDirection(x, y);
+	glutWarpPointer(400, 400);
 }
 
 void Application::InitObject()
 {
 	model = new Model;
-	model->Mesh = MeshLoaderOBJ::Load("res/models/cube.obj");
-	model->Texture = tex.Load("res/textures/uvtemplate.bmp");
+	model->Mesh = MeshLoaderOBJ::Load("res/models/Cat.obj");
+	model->Texture = tex.Load("res/textures/Cat_diffuse.bmp");
 
-	object = new StaticObject(model, vec3(0.0f, 0.0f, -5.0f), Rotation(-55.0f, 1.0f, 0.0f, 0.0f));
+	object = new StaticObject(model, vec3(0.0f, 0.0f, -2.0f));
 }

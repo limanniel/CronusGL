@@ -18,6 +18,8 @@ class Application
 private:
 	//GLUT
 	const int RefreshRate;
+	float deltaTime;
+	float lastFrame;
 
 	// ID's
 	GLuint _programID;
@@ -28,7 +30,6 @@ private:
 	GLuint VertexArrayID;
 
 	// Matrices
-	glm::mat4 _viewMatrix;
 	glm::mat4 _projectionMatrix;
 	glm::mat4 _MVP;
 
@@ -47,6 +48,7 @@ public:
 	void Display();
 	void Update();
 	void Keyboard(unsigned char key, int x, int y);
+	void PassiveMouse(int x, int y);
 
 	void InitObject();
 };
