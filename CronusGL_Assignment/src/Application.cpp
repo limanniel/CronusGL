@@ -15,10 +15,12 @@ Application::Application(int argc, char* argv[])
 
 	// GLUT sub-systems init
 	glutKeyboardFunc(GLUTCallbacks::Keyboard);
+	glutKeyboardUpFunc(GLUTCallbacks::KeyboardUp);
 	glutDisplayFunc(GLUTCallbacks::Display);
 	glutTimerFunc(RefreshRate, GLUTCallbacks::Timer, RefreshRate);
 	glutPassiveMotionFunc(GLUTCallbacks::PassiveMouse);
 	glutSetCursor(GLUT_CURSOR_NONE);
+	glutIgnoreKeyRepeat(1);
 	std::cout << "GLUT initialised successfully!" << std::endl;
 
 	// GLEW Init
@@ -109,16 +111,19 @@ void Application::Update()
 void Application::Keyboard(unsigned char key, int x, int y)
 {
 	camera->UpdateCameraPosition(key);
-
 	// Close app when ESC is pressed
 	if (key == 27) {
 		glutLeaveMainLoop();
 	}
 }
 
+void Application::KeyboardUp(unsigned char key, int x, int y)
+{
+	camera->UpdateCameraPositionUp(key);
+}
+
 void Application::PassiveMouse(int x, int y)
 {
-
 	camera->UpdateCameraDirection(x, y);
 	glutWarpPointer(400, 400);
 }

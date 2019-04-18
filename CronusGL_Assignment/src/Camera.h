@@ -14,12 +14,16 @@ private:
 	glm::vec3 _cameraUp;
 	glm::mat4 _viewMatrix;
 
+	// Camera Bools
+	bool W, S, A, D;
+
 public:
 	Camera();
 	~Camera();
 
 	void Update(float deltaTime);
 	void UpdateCameraPosition(unsigned char key);
+	void UpdateCameraPositionUp(unsigned char key);
 	void UpdateCameraDirection(int x, int y);
 
 	inline glm::mat4 GetViewMatrix() const { return _viewMatrix; }
