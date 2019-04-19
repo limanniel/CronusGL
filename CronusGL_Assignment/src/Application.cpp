@@ -62,6 +62,8 @@ Application::Application(int argc, char* argv[])
 
 Application::~Application()
 {
+	glDeleteTextures(1, &model->Texture);
+
 	delete model;
 	model = nullptr;
 	delete camera;

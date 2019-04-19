@@ -28,6 +28,11 @@ struct Mesh
 	std::vector<glm::vec3> Vertices;
 	std::vector<glm::vec2> UVCoords;
 	std::vector<glm::vec3> Normals;
+
+	std::vector<unsigned short> Indices;
+	std::vector<glm::vec3> indexed_Vertices;
+	std::vector<glm::vec2> indexed_UVCoords;
+	std::vector<glm::vec3> indexed_Normals;
 };
 
 struct Model 

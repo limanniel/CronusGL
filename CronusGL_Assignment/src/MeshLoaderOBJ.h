@@ -4,6 +4,7 @@
 #include <fstream>
 #include <limits>
 #include <vector>
+#include <map>
 #include "Structures.h"
 
 namespace MeshLoaderOBJ {

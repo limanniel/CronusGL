@@ -14,8 +14,12 @@ protected:
 	// Object Data
 	Model* _model;
 	GLuint  _textureID;
+
+	// Buffers
 	GLuint _vertexBuffer;
 	GLuint _uvBuffer;
+	GLuint _normalBuffer;
+	GLuint _elementBuffer;
 
 public:
 	SceneObject(Model* model);

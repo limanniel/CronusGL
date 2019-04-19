@@ -3,6 +3,10 @@
 
 using namespace std;
 
+struct PackedVertex;
+void indexVBO(Mesh* Mesh);
+bool getSimilarVertexIndex(PackedVertex& packed, std::map<PackedVertex, unsigned short>& VertexToOutIndex, unsigned short& result);
+
 namespace MeshLoaderOBJ 
 {
 	Mesh* Load(const char* path)
@@ -89,6 +93,57 @@ namespace MeshLoaderOBJ
 		
 		std::cout << "OBJECT LOADED!" << std::endl;
 		inFile.close();	
+
+		indexVBO(mesh);
+
 		return mesh;
+	}
+}
+
+struct PackedVertex
+{
+	glm::vec3 vertex;
+	glm::vec2 uv;
+	glm::vec3 normal;
+	bool operator<(const PackedVertex that) const { return memcmp((void*)this, (void*)& that, sizeof(PackedVertex)) > 0; };
+};
+
+bool getSimilarVertexIndex(PackedVertex& packed, std::map<PackedVertex,unsigned short>& VertexToOutIndex, unsigned short& result)
+{
+	std::map<PackedVertex, unsigned short>::iterator it = VertexToOutIndex.find(packed);
+	if (it == VertexToOutIndex.end()) {
+		return false;
+	}
+	else {
+		result = it->second;
+		return true;
+	}
+}
+
+void indexVBO(Mesh* Mesh)
+{
+	std::map<PackedVertex, unsigned short> VertexToOutIndex;
+
+	for (unsigned int i = 0; i < Mesh->Vertices.size(); i++)
+	{
+		PackedVertex packed = { Mesh->Vertices[i], Mesh->UVCoords[i], Mesh->Normals[i] };
+
+		// Try to find similar vertex
+		unsigned short index;
+		bool found = getSimilarVertexIndex(packed, VertexToOutIndex, index);
+
+		// Similar Vertex already in VBO
+		if (found) {
+			Mesh->Indices.push_back(index);
+		}
+		// Vertex not found/unique
+		else {
+			Mesh->indexed_Vertices.push_back(Mesh->Vertices[i]);
+			Mesh->indexed_UVCoords.push_back(Mesh->UVCoords[i]);
+			Mesh->indexed_Normals.push_back(Mesh->Normals[i]);
+			unsigned short newIndex = (unsigned short)Mesh->indexed_Vertices.size() - 1;
+			Mesh->Indices.push_back(newIndex);
+			VertexToOutIndex[packed] = newIndex;
+		}
 	}
 }
