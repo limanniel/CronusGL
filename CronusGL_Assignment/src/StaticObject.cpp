@@ -28,7 +28,7 @@ StaticObject::StaticObject(Model* model, vec3 position, Rotation rotation) : Sce
 	// MVP Matrix Compute
 	_modelMatrix = translate(_modelMatrix, _position);
 	_modelMatrix = rotate(_modelMatrix, radians(_rotation.Angle), _rotation.Axis);
-	//_modelMatrix = scale(_modelMatrix, vec3(0.125f));
+	_modelMatrix = scale(_modelMatrix, vec3(0.125f));
 }
 
 
