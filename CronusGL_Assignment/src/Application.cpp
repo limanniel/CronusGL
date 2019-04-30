@@ -52,6 +52,9 @@ Application::Application(int argc, char* argv[])
 
 	// Handlers to Shaders
 	_matrixID = glGetUniformLocation(_programID, "MVP");
+	_viewMatrixID = glGetUniformLocation(_programID, "V");
+	_modelMatrixID = glGetUniformLocation(_programID, "M");
+	_lightID = glGetUniformLocation(_programID, "LightPosition_worldspace");
 	_textureID = glGetUniformLocation(_programID, "myTextureSampler"); 
 
 	InitObject();
@@ -83,6 +86,9 @@ void Application::Display()
 
 	glUseProgram(_programID);
 	glUniformMatrix4fv(_matrixID, 1, GL_FALSE, value_ptr(_MVP)); // Transfer MVP data onto shader
+	glUniformMatrix4fv(_modelMatrixID, 1, GL_FALSE, value_ptr(_ModelMatrix));
+	glUniformMatrix4fv(_viewMatrixID, 1, GL_FALSE, value_ptr(_ViewMatrix));
+	glUniform3f(_lightID, _lightPos.x, _lightPos.y, _lightPos.z);
 	glUniform1i(_textureID, 0);
 
 	object->Draw();
@@ -98,14 +104,17 @@ void Application::Display()
 void Application::Update()
 {
 	// Get Delta Time
-	float currentTime = glutGet(GLUT_ELAPSED_TIME);
+	float currentTime = (float)glutGet(GLUT_ELAPSED_TIME);
 	deltaTime = currentTime - lastFrame;
 	lastFrame = currentTime;
 
-	// Update Objects state and create MVP Matrix
+	// Update Objects state and assemble MVP Matrix
 	camera->Update(deltaTime);
 	object->Update();
 	_MVP = _projectionMatrix * camera->GetViewMatrix() * object->GetModelMatrix();
+	_ModelMatrix = object->GetModelMatrix();
+	_ViewMatrix = camera->GetViewMatrix();
+	_lightPos = glm::vec3(4, 4, 4);
 
 	glutPostRedisplay();
 }
@@ -133,8 +142,8 @@ void Application::PassiveMouse(int x, int y)
 void Application::InitObject()
 {
 	model = new Model;
-	model->Mesh = MeshLoaderOBJ::Load("res/models/Cat.obj");
-	model->Texture = tex.Load("res/textures/Cat_diffuse.bmp");
+	model->Mesh = MeshLoaderOBJ::Load("res/models/cube.obj");
+	model->Texture = tex.Load("res/textures/uvtemplate.bmp");
 
 	object = new StaticObject(model, vec3(0.0f, 0.0f, -2.0f));
 }

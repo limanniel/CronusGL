@@ -1,25 +1,26 @@
-#include "StaticObject.h"
+#include "DynamicObject.h"
 
 
 
-StaticObject::StaticObject(Model* model, vec3 position, Rotation rotation, vec3 scale) : SceneObject(model, position, rotation, scale)
+DynamicObject::DynamicObject(Model* model, vec3 position, Rotation rotation, vec3 scale)
+	: SceneObject(model, position, rotation, scale)
 {
 	// Buffer Gen
 	glGenBuffers(1, &_vertexBuffer);
 	glBindBuffer(GL_ARRAY_BUFFER, _vertexBuffer);
-	glBufferData(GL_ARRAY_BUFFER, _model->Mesh->indexed_Vertices.size() * sizeof(vec3), &_model->Mesh->indexed_Vertices[0], GL_STATIC_DRAW);
+	glBufferData(GL_ARRAY_BUFFER, _model->Mesh->indexed_Vertices.size() * sizeof(vec3), &_model->Mesh->indexed_Vertices[0], GL_DYNAMIC_DRAW);
 
 	glGenBuffers(1, &_uvBuffer);
 	glBindBuffer(GL_ARRAY_BUFFER, _uvBuffer);
-	glBufferData(GL_ARRAY_BUFFER, _model->Mesh->indexed_UVCoords.size() * sizeof(vec2), &_model->Mesh->indexed_UVCoords[0], GL_STATIC_DRAW);
+	glBufferData(GL_ARRAY_BUFFER, _model->Mesh->indexed_UVCoords.size() * sizeof(vec2), &_model->Mesh->indexed_UVCoords[0], GL_DYNAMIC_DRAW);
 
 	glGenBuffers(1, &_normalBuffer);
 	glBindBuffer(GL_ARRAY_BUFFER, _normalBuffer);
-	glBufferData(GL_ARRAY_BUFFER, _model->Mesh->indexed_Normals.size() * sizeof(vec3), &_model->Mesh->indexed_Normals[0], GL_STATIC_DRAW);
+	glBufferData(GL_ARRAY_BUFFER, _model->Mesh->indexed_Normals.size() * sizeof(vec3), &_model->Mesh->indexed_Normals[0], GL_DYNAMIC_DRAW);
 
 	glGenBuffers(1, &_elementBuffer);
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, _elementBuffer);
-	glBufferData(GL_ELEMENT_ARRAY_BUFFER, _model->Mesh->Indices.size() * sizeof(unsigned short), &_model->Mesh->Indices[0], GL_STATIC_DRAW);
+	glBufferData(GL_ELEMENT_ARRAY_BUFFER, _model->Mesh->Indices.size() * sizeof(unsigned short), &_model->Mesh->Indices[0], GL_DYNAMIC_DRAW);
 
 	// Model -> World : Matrix Compute
 	_modelMatrix = glm::translate(_modelMatrix, _position);
@@ -28,7 +29,7 @@ StaticObject::StaticObject(Model* model, vec3 position, Rotation rotation, vec3 
 }
 
 
-StaticObject::~StaticObject()
+DynamicObject::~DynamicObject()
 {
 	glDeleteBuffers(1, &_vertexBuffer);
 	glDeleteBuffers(1, &_uvBuffer);
@@ -36,11 +37,11 @@ StaticObject::~StaticObject()
 	glDeleteBuffers(1, &_elementBuffer);
 }
 
-void StaticObject::Update()
+void DynamicObject::Update()
 {
 }
 
-void StaticObject::Draw()
+void DynamicObject::Draw()
 {
 	// Texture
 	glActiveTexture(GL_TEXTURE0);

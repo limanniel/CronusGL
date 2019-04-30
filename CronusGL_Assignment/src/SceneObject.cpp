@@ -1,10 +1,14 @@
 #include "SceneObject.h"
 
 
-SceneObject::SceneObject(Model* model)
-	: _model(nullptr), _textureID(0), _vertexBuffer(0), _uvBuffer(0)
+SceneObject::SceneObject(Model* model, vec3 position, Rotation rotation, vec3 scale)
 {
-	// Assign identity matrix to each coordinate system
+	_model = model;
+	_position = position;
+	_rotation = rotation;
+	_scale = scale;
+
+	// Assign identity matrix to model matrix
 	_modelMatrix = mat4(1.0f);
 }
 

@@ -11,6 +11,7 @@
 #include "Camera.h"
 
 #include "StaticObject.h"
+#include "DynamicObject.h"
 
 
 class Application
@@ -23,15 +24,19 @@ private:
 
 	// ID's
 	GLuint _programID;
-	GLuint _matrixID;
+	GLuint _matrixID, _viewMatrixID, _modelMatrixID;
 	GLuint _textureID;
+	GLuint _lightID;
 
 	// Buffers
 	GLuint VertexArrayID;
 
+	// Light
+	glm::vec3 _lightPos;
+
 	// Matrices
 	glm::mat4 _projectionMatrix;
-	glm::mat4 _MVP;
+	glm::mat4 _MVP, _ModelMatrix, _ViewMatrix;
 
 	// Camera
 	Camera* camera;
