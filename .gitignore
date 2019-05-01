@@ -1,7 +1,9 @@
 # Directories
 .vs/
 Debug/
+!Debug/freeglut.dll
 OpenGL_Assignment_REWORKED/Debug
+
 
 # Files
 *.user
