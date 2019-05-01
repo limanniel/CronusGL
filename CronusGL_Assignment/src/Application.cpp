@@ -142,8 +142,8 @@ void Application::PassiveMouse(int x, int y)
 void Application::InitObject()
 {
 	model = new Model;
-	model->Mesh = MeshLoaderOBJ::Load("res/models/cube.obj");
-	model->Texture = tex.Load("res/textures/uvtemplate.bmp");
+	model->Mesh = MeshLoaderOBJ::Load("res/models/cat.obj");
+	model->Texture = tex.Load("res/textures/cat_diffuse.bmp");
 
-	object = new StaticObject(model, vec3(0.0f, 0.0f, -2.0f));
+	object = new StaticObject(model, vec3(0.0f, 0.0f, -2.0f), Rotation(), vec3(0.125f));
 }

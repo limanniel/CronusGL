@@ -20,12 +20,18 @@ void main(){
 	float LightPower = 50.0f;
 
 	vec3 MaterialDiffuseColour = texture(myTextureSampler, UV).rgb;
+	vec3 MaterialAmbientColor = vec3(0.1,0.1,0.1) * MaterialDiffuseColour;
+	vec3 MaterialSpecularColor = vec3(0.3,0.3,0.3);
 
 	float distance = length(LightPosition_worldspace - Position_worldspace);
-
 	vec3 n = normalize(Normal_cameraspace);
 	vec3 l = normalize(LightDirection_cameraspace);
 
+	// Specular
+	vec3 Eye_Vector = normalize(EyeDirection_cameraspace);
+	vec3 Reflect_Direction = reflect(-l,n);
+	float cosAlpha = clamp(dot(Eye_Vector, Reflect_Direction), 0, 1);
+
 	float cosTheta = clamp(dot(n,l), 0, 1);
-	color = MaterialDiffuseColour * LightColor * LightPower * cosTheta / (distance * distance);
+	color = MaterialAmbientColor + MaterialDiffuseColour * LightColor * LightPower * cosTheta / (distance * distance) + MaterialSpecularColor * LightColor * LightPower * pow(cosAlpha,5) / (distance*distance);
 }
