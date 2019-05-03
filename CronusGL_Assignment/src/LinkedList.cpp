@@ -39,14 +39,18 @@ LinkedList::Node* LinkedList::GetNode(Node* node, int position)
 
 LinkedList::Node* LinkedList::FindNode(Node* node, SceneObject* object)
 {
-	while (node != nullptr)
+	if (node->object == object)
 	{
-		if (node->object == object)
-		{
-			return node;
-		}
-		node = node->next;
+		return node;
 	}
+
+	node = node->next;
+
+	if (node->next != nullptr)
+	{
+		FindNode(node, object);
+	}
+
 	// Node not found
 	return nullptr;
 }
@@ -81,10 +85,13 @@ void LinkedList::DeleteNodeAfter(Node* node)
 void LinkedList::DeleteList(Node* node)
 {
 	Node* tempNode;
-	while (node != nullptr)
+
+	tempNode = node;
+	node = node->next;
+	delete tempNode;
+
+	if (node->next != nullptr)
 	{
-		tempNode = node;
-		node = node->next;
-		delete tempNode;
+		DeleteList(node);
 	}
 }

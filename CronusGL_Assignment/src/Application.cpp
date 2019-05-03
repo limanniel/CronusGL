@@ -12,6 +12,7 @@ Application::Application(int argc, char* argv[])
 	glutInitWindowSize(800, 800);
 	glutInitWindowPosition(500, 130);
 	glutCreateWindow("CronusGL");
+	glutSetOption(GLUT_ACTION_ON_WINDOW_CLOSE, GLUT_ACTION_CONTINUE_EXECUTION);
 
 	// GLUT sub-systems init
 	glutKeyboardFunc(GLUTCallbacks::Keyboard);
@@ -61,6 +62,8 @@ Application::Application(int argc, char* argv[])
 
 	// Launch Game Loop
 	glutMainLoop();
+
+	delete this; // Left MainLoop so delete app
 }
 
 Application::~Application()
