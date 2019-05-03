@@ -37,7 +37,7 @@ private:
 
 	// Matrices
 	glm::mat4 _projectionMatrix;
-	glm::mat4 _MVP, _ModelMatrix, _ViewMatrix;
+	glm::mat4 _ViewMatrix;
 
 	// Camera
 	Camera* camera;

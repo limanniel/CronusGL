@@ -49,7 +49,6 @@ Application::Application(int argc, char* argv[])
 	camera = new Camera;
 	_projectionMatrix = glm::mat4(1.0f);
 	_projectionMatrix = perspective(radians(45.0f), 4.0f / 3.0f, 0.1f, 100.0f);
-	_MVP = glm::mat4(1.0f);
 
 	// Handlers to Shaders
 	_matrixID = glGetUniformLocation(_programID, "MVP");
@@ -162,6 +161,8 @@ void Application::InitObject()
 		_objectList->InsertNodeAfter(_objectList->GetNodeHead(), _objectList->CreateNode(new StaticObject(model, vec3(xOffset, 0.0f, -2.0f))));
 		xOffset += 2.5f;
 	}
-
-	_objectList->DeleteNodeAfter(_objectList->GetNode(_objectList->GetNodeHead(), 1));
 }
+
+
+
+
