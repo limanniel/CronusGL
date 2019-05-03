@@ -39,23 +39,4 @@ namespace GLUTCallbacks
 	{
 		app->PassiveMouse(x, y);
 	}
-	void menu(int option)
-	{
-		
-		switch (option)
-		{
-		case 1:
-			std::cout << "CAT!" << std::endl;
-			break;
-		case 2:
-			std::cout << "CUBE!" << std::endl;
-			break;
-		case 3:
-			break;
-		default:
-			break;
-		}
-
-		glutPostRedisplay();
-	}
 }
