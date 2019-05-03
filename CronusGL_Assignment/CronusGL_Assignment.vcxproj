@@ -135,6 +135,7 @@
     <ClCompile Include="src\Application.cpp" />
     <ClCompile Include="src\DynamicObject.cpp" />
     <ClCompile Include="src\GLUTCallbacks.cpp" />
+    <ClCompile Include="src\LinkedList.cpp" />
     <ClCompile Include="src\LoadTexture2DBMP.cpp" />
     <ClCompile Include="src\main.cpp" />
     <ClCompile Include="src\MeshLoaderOBJ.cpp" />
@@ -147,6 +148,7 @@
     <ClInclude Include="src\Application.h" />
     <ClInclude Include="src\DynamicObject.h" />
     <ClInclude Include="src\GLUTCallbacks.h" />
+    <ClInclude Include="src\LinkedList.h" />
     <ClInclude Include="src\LoadTexture2DBMP.h" />
     <ClInclude Include="src\MeshLoaderOBJ.h" />
     <ClInclude Include="src\SceneObject.h" />

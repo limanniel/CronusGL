@@ -1,7 +1,7 @@
 #include "Application.h"
 
 Application::Application(int argc, char* argv[])
-	: RefreshRate(16), deltaTime(0.0f), lastFrame(0.0f), model(nullptr), object(nullptr)
+	: RefreshRate(16), deltaTime(0.0f), lastFrame(0.0f), model(nullptr)
 {
 	// GLUT Init
 	GLUTCallbacks::Init(this);
@@ -71,8 +71,8 @@ Application::~Application()
 	model = nullptr;
 	delete camera;
 	camera = nullptr;
-	delete object;
-	object = nullptr;
+	delete _objectList;
+	_objectList = nullptr;
 
 	glDeleteProgram(_programID);
 	glDeleteVertexArrays(1, &VertexArrayID);
@@ -84,14 +84,17 @@ void Application::Display()
 
 	/////////////////////////////
 
-	glUseProgram(_programID);
-	glUniformMatrix4fv(_matrixID, 1, GL_FALSE, value_ptr(_MVP)); // Transfer MVP data onto shader
-	glUniformMatrix4fv(_modelMatrixID, 1, GL_FALSE, value_ptr(_ModelMatrix));
-	glUniformMatrix4fv(_viewMatrixID, 1, GL_FALSE, value_ptr(_ViewMatrix));
-	glUniform3f(_lightID, _lightPos.x, _lightPos.y, _lightPos.z);
-	glUniform1i(_textureID, 0);
+	for (int i = 1; i <= _objectList->GetListSize(); i++)
+	{
+		glUseProgram(_programID);
+		glUniformMatrix4fv(_matrixID, 1, GL_FALSE, value_ptr(_objectList->GetNode(_objectList->GetNodeHead(), i)->object->GetMVPMatrix())); // Transfer MVP data onto shader
+		glUniformMatrix4fv(_modelMatrixID, 1, GL_FALSE, value_ptr(_objectList->GetNode(_objectList->GetNodeHead(), i)->object->GetModelMatrix()));
+		glUniformMatrix4fv(_viewMatrixID, 1, GL_FALSE, value_ptr(_ViewMatrix));
+		glUniform3f(_lightID, _lightPos.x, _lightPos.y, _lightPos.z);
+		glUniform1i(_textureID, 0);
 
-	object->Draw();
+		_objectList->GetNode(_objectList->GetNodeHead(), i)->object->Draw();
+	}
 
 	// Rebind Buffer to nothing
 	glBindBuffer(GL_ARRAY_BUFFER, 0);
@@ -110,10 +113,14 @@ void Application::Update()
 
 	// Update Objects state and assemble MVP Matrix
 	camera->Update(deltaTime);
-	object->Update();
-	_MVP = _projectionMatrix * camera->GetViewMatrix() * object->GetModelMatrix();
-	_ModelMatrix = object->GetModelMatrix();
+
 	_ViewMatrix = camera->GetViewMatrix();
+	for (int i = 1; i <= _objectList->GetListSize(); i++)
+	{
+		_objectList->GetNode(_objectList->GetNodeHead(), i)->object->SetMVPMatrix(_projectionMatrix, _ViewMatrix);
+		_objectList->GetNode(_objectList->GetNodeHead(), i)->object->Update();
+	}
+	
 	_lightPos = glm::vec3(4, 4, 4);
 
 	glutPostRedisplay();
@@ -142,8 +149,16 @@ void Application::PassiveMouse(int x, int y)
 void Application::InitObject()
 {
 	model = new Model;
-	model->Mesh = MeshLoaderOBJ::Load("res/models/cat.obj");
-	model->Texture = tex.Load("res/textures/cat_diffuse.bmp");
+	model->Mesh = MeshLoaderOBJ::Load("res/models/cube.obj");
+	model->Texture = tex.Load("res/textures/uvtemplate.bmp");
 
-	object = new StaticObject(model, vec3(0.0f, 0.0f, -2.0f), Rotation(), vec3(0.125f));
+	_objectList = new LinkedList;
+	float xOffset = 0.0f;
+	for (int i = 0; i < 5; i++)
+	{
+		_objectList->InsertNodeAfter(_objectList->GetNodeHead(), _objectList->CreateNode(new StaticObject(model, vec3(xOffset, 0.0f, -2.0f))));
+		xOffset += 2.5f;
+	}
+
+	_objectList->DeleteNodeAfter(_objectList->GetNode(_objectList->GetNodeHead(), 1));
 }

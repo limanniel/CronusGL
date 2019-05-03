@@ -9,6 +9,7 @@
 #include "LoadTexture2DBMP.h"
 #include "MeshLoaderOBJ.h"
 #include "Camera.h"
+#include "LinkedList.h"
 
 #include "StaticObject.h"
 #include "DynamicObject.h"
@@ -44,7 +45,7 @@ private:
 	//Object
 	LoadTexture2DBMP tex;
 	Model* model;
-	StaticObject* object;
+	LinkedList* _objectList;
 
 public:
 	Application(int argc, char* argv[]);

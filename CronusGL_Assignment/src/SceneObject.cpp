@@ -8,8 +8,9 @@ SceneObject::SceneObject(Model* model, vec3 position, Rotation rotation, vec3 sc
 	_rotation = rotation;
 	_scale = scale;
 
-	// Assign identity matrix to model matrix
+	// Assign identity matrices
 	_modelMatrix = mat4(1.0f);
+	_mvpMatrix = mat4(1.0f);
 }
 
 

@@ -11,6 +11,7 @@ class SceneObject
 {
 protected:
 	mat4 _modelMatrix;
+	mat4 _mvpMatrix;
 
 	// Object Data
 	Model* _model{ nullptr };
@@ -33,5 +34,7 @@ public:
 	virtual void Draw() = 0;
 
 	inline glm::mat4 GetModelMatrix() const { return _modelMatrix; }
+	inline glm::mat4 GetMVPMatrix() const { return _mvpMatrix; }
+	inline void SetMVPMatrix(glm::mat4& perspectiveMatrix, glm::mat4& viewMatrix) { _mvpMatrix = perspectiveMatrix * viewMatrix * _modelMatrix; }
 };
 
