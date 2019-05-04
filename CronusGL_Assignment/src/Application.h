@@ -9,13 +9,10 @@
 #include "LoadTexture2DBMP.h"
 #include "MeshLoaderOBJ.h"
 #include "Camera.h"
+
 #include "LinkedList.h"
-
-#include "StaticObject.h"
-#include "DynamicObject.h"
-
 #include "SceneNode_Static.h"
-
+#include "SceneNode_Dynamic.h"
 
 class Application
 {
