@@ -14,6 +14,8 @@
 #include "StaticObject.h"
 #include "DynamicObject.h"
 
+#include "SceneNode_Static.h"
+
 
 class Application
 {
@@ -25,7 +27,7 @@ private:
 
 	// ID's
 	GLuint _programID;
-	GLuint _matrixID, _viewMatrixID, _modelMatrixID;
+	GLuint _projectionMatrixID, _viewMatrixID;
 	GLuint _textureID;
 	GLuint _lightID;
 
@@ -37,7 +39,7 @@ private:
 
 	// Matrices
 	glm::mat4 _projectionMatrix;
-	glm::mat4 _ViewMatrix;
+	glm::mat4 _viewMatrix;
 
 	// Camera
 	Camera* camera;
@@ -45,7 +47,9 @@ private:
 	//Object
 	LoadTexture2DBMP tex;
 	Model* model;
-	LinkedList* _objectList;
+
+	SceneNode* _cube;
+	SceneNode* _cube2;
 
 public:
 	Application(int argc, char* argv[]);

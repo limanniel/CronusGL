@@ -13,13 +13,13 @@ out vec3 EyeDirection_cameraspace;
 out vec3 LightDirection_cameraspace;
 
 // Handles
-uniform mat4 MVP;
 uniform mat4 M;
 uniform mat4 V;
+uniform mat4 P;
 uniform vec3 LightPosition_worldspace;
 
 void main(){
-	gl_Position = MVP * vec4(VertexPosition, 1);
+	gl_Position = P * V * M * vec4(VertexPosition, 1);
 
 	Position_worldspace = (M * vec4(VertexPosition,1)).xyz;
 

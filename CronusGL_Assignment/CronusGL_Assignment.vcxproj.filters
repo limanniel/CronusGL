@@ -66,6 +66,9 @@
     <ClCompile Include="src\SceneNode.cpp">
       <Filter>Source Files\Scene graph</Filter>
     </ClCompile>
+    <ClCompile Include="src\SceneNode_Static.cpp">
+      <Filter>Source Files\Scene graph</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\Application.h">
@@ -102,6 +105,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="src\SceneNode.h">
+      <Filter>Header Files\Scene Graph</Filter>
+    </ClInclude>
+    <ClInclude Include="src\SceneNode_Static.h">
       <Filter>Header Files\Scene Graph</Filter>
     </ClInclude>
   </ItemGroup>

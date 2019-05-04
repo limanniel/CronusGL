@@ -48,12 +48,12 @@ Application::Application(int argc, char* argv[])
 	// Camera and and Projection Set-Up
 	camera = new Camera;
 	_projectionMatrix = glm::mat4(1.0f);
-	_projectionMatrix = perspective(radians(45.0f), 4.0f / 3.0f, 0.1f, 100.0f);
+	_projectionMatrix = glm::perspective(glm::radians(45.0f), 4.0f / 3.0f, 0.1f, 100.0f);
 
 	// Handlers to Shaders
-	_matrixID = glGetUniformLocation(_programID, "MVP");
+	_projectionMatrixID = glGetUniformLocation(_programID, "P");
 	_viewMatrixID = glGetUniformLocation(_programID, "V");
-	_modelMatrixID = glGetUniformLocation(_programID, "M");
+	//_modelMatrixID = glGetUniformLocation(_programID, "M");
 	_lightID = glGetUniformLocation(_programID, "LightPosition_worldspace");
 	_textureID = glGetUniformLocation(_programID, "myTextureSampler"); 
 
@@ -73,8 +73,6 @@ Application::~Application()
 	model = nullptr;
 	delete camera;
 	camera = nullptr;
-	delete _objectList;
-	_objectList = nullptr;
 
 	glDeleteProgram(_programID);
 	glDeleteVertexArrays(1, &VertexArrayID);
@@ -86,17 +84,14 @@ void Application::Display()
 
 	/////////////////////////////
 
-	for (int i = 1; i <= _objectList->GetListSize(); i++)
-	{
-		glUseProgram(_programID);
-		glUniformMatrix4fv(_matrixID, 1, GL_FALSE, value_ptr(_objectList->GetNode(_objectList->GetNodeHead(), i)->object->GetMVPMatrix())); // Transfer MVP data onto shader
-		glUniformMatrix4fv(_modelMatrixID, 1, GL_FALSE, value_ptr(_objectList->GetNode(_objectList->GetNodeHead(), i)->object->GetModelMatrix()));
-		glUniformMatrix4fv(_viewMatrixID, 1, GL_FALSE, value_ptr(_ViewMatrix));
-		glUniform3f(_lightID, _lightPos.x, _lightPos.y, _lightPos.z);
-		glUniform1i(_textureID, 0);
+	glUseProgram(_programID);
+	glUniformMatrix4fv(_projectionMatrixID, 1, GL_FALSE, value_ptr(_projectionMatrix)); // Transfer MVP data onto shader
+	glUniformMatrix4fv(_viewMatrixID, 1, GL_FALSE, value_ptr(_viewMatrix));
+	glUniform3f(_lightID, _lightPos.x, _lightPos.y, _lightPos.z);
+	glUniform1i(_textureID, 0);
 
-		_objectList->GetNode(_objectList->GetNodeHead(), i)->object->Draw();
-	}
+	_cube->Render();
+
 
 	// Rebind Buffer to nothing
 	glBindBuffer(GL_ARRAY_BUFFER, 0);
@@ -115,13 +110,10 @@ void Application::Update()
 
 	// Update Objects state and assemble MVP Matrix
 	camera->Update(deltaTime);
+	_viewMatrix = camera->GetViewMatrix();
 
-	_ViewMatrix = camera->GetViewMatrix();
-	for (int i = 1; i <= _objectList->GetListSize(); i++)
-	{
-		_objectList->GetNode(_objectList->GetNodeHead(), i)->object->SetMVPMatrix(_projectionMatrix, _ViewMatrix);
-		_objectList->GetNode(_objectList->GetNodeHead(), i)->object->Update();
-	}
+	_cube->Update();
+
 	
 	_lightPos = glm::vec3(4, 4, 4);
 
@@ -154,15 +146,7 @@ void Application::InitObject()
 	model->Mesh = MeshLoaderOBJ::Load("res/models/cube.obj");
 	model->Texture = tex.Load("res/textures/uvtemplate.bmp");
 
-	_objectList = new LinkedList;
-	float xOffset = 0.0f;
-	for (int i = 0; i < 5; i++)
-	{
-		_objectList->InsertNodeAfter(_objectList->GetNodeHead(), _objectList->CreateNode(new StaticObject(model, vec3(xOffset, 0.0f, -2.0f))));
-		xOffset += 2.5f;
-	}
+	_cube = new SceneNode_Static(model, vec3(0.0f, 0.0f, -2.0f), Rotation(), vec3(1.0f, 1.0f, 1.0f));
+	_cube2 = new SceneNode_Static(model, vec3(0.0f, 0.0f, -2.0f), Rotation(), vec3(1.0f, 1.0f, 1.0f));
+	_cube->AddChild(_cube2);
 }
-
-
-
-

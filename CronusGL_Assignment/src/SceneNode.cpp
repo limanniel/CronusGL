@@ -2,16 +2,19 @@
 
 
 
-SceneNode::SceneNode(Model* model)
+SceneNode::SceneNode(Model* model, glm::vec3 position, Rotation rotation, glm::vec3 scale)
 {
 	_Parent = nullptr;
 
 	this->_Model = model;
-	_Rotation = Rotation();
-	_Scale = glm::vec3(1.0f, 1.0f, 1.0f);
-	_Position = glm::vec3(0.0f, 0.0f, 0.0f);
+	_Position = position;
+	_Rotation = rotation;
+	_Scale = scale;
 	_WorldTransformMatrix = glm::mat4(1.0f);
 	_LocalTransformMatrix = glm::mat4(1.0f);
+	
+
+	ComputeLocalTransformMatrix();
 }
 
 
@@ -22,7 +25,6 @@ SceneNode::~SceneNode()
 
 void SceneNode::Update()
 {
-	_LocalTransformMatrix = ComputeLocalTransformMatrix();
 
 	// Cumulate transformations 
 	if (_Parent)
@@ -86,10 +88,9 @@ void SceneNode::AddSibling(SceneNode* node)
 	node->_Parent = this->_Parent;
 }
 
-glm::mat4 SceneNode::ComputeLocalTransformMatrix()
+void SceneNode::ComputeLocalTransformMatrix()
 {
-	glm::mat4 tempMat = glm::translate(tempMat, _Position);
-	tempMat = glm::rotate(tempMat, glm::radians(_Rotation.Angle), _Rotation.Axis);
-	tempMat = glm::scale(tempMat, _Scale);
-	return tempMat;
+	_LocalTransformMatrix = glm::translate(_LocalTransformMatrix, _Position);
+	_LocalTransformMatrix = glm::rotate(_LocalTransformMatrix, glm::radians(_Rotation.Angle), _Rotation.Axis);
+	_LocalTransformMatrix = glm::scale(_LocalTransformMatrix, _Scale);
 }
