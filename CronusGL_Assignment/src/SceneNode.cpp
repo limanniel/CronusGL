@@ -25,7 +25,6 @@ SceneNode::~SceneNode()
 
 void SceneNode::Update()
 {
-
 	// Cumulate transformations 
 	if (_Parent)
 	{

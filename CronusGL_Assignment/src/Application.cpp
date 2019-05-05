@@ -53,7 +53,6 @@ Application::Application(int argc, char* argv[])
 	// Handlers to Shaders
 	_projectionMatrixID = glGetUniformLocation(_programID, "P");
 	_viewMatrixID = glGetUniformLocation(_programID, "V");
-	//_modelMatrixID = glGetUniformLocation(_programID, "M");
 	_lightID = glGetUniformLocation(_programID, "LightPosition_worldspace");
 	_textureID = glGetUniformLocation(_programID, "myTextureSampler"); 
 
@@ -73,6 +72,10 @@ Application::~Application()
 	model = nullptr;
 	delete camera;
 	camera = nullptr;
+	delete _cube;
+	_cube = nullptr;
+	delete _tank;
+	_tank = nullptr;
 
 	glDeleteProgram(_programID);
 	glDeleteVertexArrays(1, &VertexArrayID);
@@ -91,6 +94,7 @@ void Application::Display()
 	glUniform1i(_textureID, 0);
 
 	_cube->Render();
+	_tank->Render();
 
 
 	// Rebind Buffer to nothing
@@ -113,6 +117,7 @@ void Application::Update()
 	_viewMatrix = camera->GetViewMatrix();
 
 	_cube->Update();
+	_tank->Update(deltaTime);
 
 	
 	_lightPos = glm::vec3(4, 4, 4);
@@ -123,6 +128,7 @@ void Application::Update()
 void Application::Keyboard(unsigned char key, int x, int y)
 {
 	camera->UpdateCameraPosition(key);
+	_tank->MoveKeyDown(key);
 	// Close app when ESC is pressed
 	if (key == 27) {
 		glutLeaveMainLoop();
@@ -132,6 +138,7 @@ void Application::Keyboard(unsigned char key, int x, int y)
 void Application::KeyboardUp(unsigned char key, int x, int y)
 {
 	camera->UpdateCameraPositionUp(key);
+	_tank->MoveKeyUp(key);
 }
 
 void Application::PassiveMouse(int x, int y)
@@ -146,7 +153,9 @@ void Application::InitObject()
 	model->Mesh = MeshLoaderOBJ::Load("res/models/cube.obj");
 	model->Texture = tex.Load("res/textures/uvtemplate.bmp");
 
-	_cube = new SceneNode_Static(model, vec3(0.0f, 0.0f, -2.0f), Rotation(), vec3(1.0f, 1.0f, 1.0f));
+	_cube = new SceneNode_Static(model, vec3(0.0f, 0.0f, -20.0f), Rotation(), vec3(1.0f, 1.0f, 1.0f));
 	_cube2 = new SceneNode_Static(model, vec3(0.0f, 0.0f, -2.0f), Rotation(), vec3(1.0f, 1.0f, 1.0f));
 	_cube->AddChild(_cube2);
+
+	_tank = new Tank;
 }

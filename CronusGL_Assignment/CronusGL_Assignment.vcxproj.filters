@@ -72,6 +72,9 @@
     <ClCompile Include="src\SceneNode_Dynamic.cpp">
       <Filter>Source Files\Scene graph</Filter>
     </ClCompile>
+    <ClCompile Include="src\Tank.cpp">
+      <Filter>Source Files\Objects</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\Application.h">
@@ -115,6 +118,9 @@
     </ClInclude>
     <ClInclude Include="src\SceneNode_Dynamic.h">
       <Filter>Header Files\Scene Graph</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Tank.h">
+      <Filter>Header Files\Objects</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

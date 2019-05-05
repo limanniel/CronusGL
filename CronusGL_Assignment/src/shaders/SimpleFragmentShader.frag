@@ -34,5 +34,6 @@ void main(){
 	float cosAlpha = clamp(dot(Eye_Vector, Reflect_Direction), 0, 1);
 
 	float cosTheta = clamp(dot(n,l), 0, 1);
-	color = MaterialAmbientColor + MaterialDiffuseColour * LightColour * LightPower * cosTheta / (distance * distance) + MaterialSpecularColor * LightColour * LightPower * pow(cosAlpha,5) / (distance*distance);
+	//color = MaterialAmbientColor + MaterialDiffuseColour * LightColour * LightPower * cosTheta / (distance * distance) + MaterialSpecularColor * LightColour * LightPower * pow(cosAlpha,5) / (distance*distance);
+	color = MaterialDiffuseColour;
 }

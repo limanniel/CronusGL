@@ -145,6 +145,7 @@
     <ClCompile Include="src\SceneObject.cpp" />
     <ClCompile Include="src\ShaderLoader.cpp" />
     <ClCompile Include="src\StaticObject.cpp" />
+    <ClCompile Include="src\Tank.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\Camera.h" />
@@ -161,6 +162,7 @@
     <ClInclude Include="src\ShaderLoader.h" />
     <ClInclude Include="src\StaticObject.h" />
     <ClInclude Include="src\Structures.h" />
+    <ClInclude Include="src\Tank.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="src\shaders\SimpleFragmentShader.frag" />

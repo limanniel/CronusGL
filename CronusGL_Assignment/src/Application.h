@@ -14,6 +14,8 @@
 #include "SceneNode_Static.h"
 #include "SceneNode_Dynamic.h"
 
+#include "Tank.h"
+
 class Application
 {
 private:
@@ -47,6 +49,7 @@ private:
 
 	SceneNode* _cube;
 	SceneNode* _cube2;
+	Tank* _tank;
 
 public:
 	Application(int argc, char* argv[]);
