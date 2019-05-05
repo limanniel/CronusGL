@@ -45,7 +45,6 @@ Scene::~Scene()
 	_Straight1 = nullptr;
 	_Straight2 = nullptr;
 	_Straight3 = nullptr;
-	delete _Buildings1;
 	_Buildings1 = nullptr;
 	_Buildings2 = nullptr;
 	_Buildings3 = nullptr;
