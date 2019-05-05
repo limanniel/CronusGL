@@ -117,9 +117,6 @@ void Application::Update()
 	deltaTime = currentTime - lastFrame;
 	lastFrame = currentTime;
 
-	// Update Objects state and assemble MVP Matrix
-	
-
 	if (TANK_CAMERA)
 	{
 		_tankCamera->SetCameraPosition(glm::vec3(_tank->GetTankModelMatrix()[3])); // Extract translation from model matrix

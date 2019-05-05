@@ -39,10 +39,17 @@ Scene::~Scene()
 	_TextureManager = nullptr;
 	delete _RoadStraight;
 	_RoadStraight = nullptr;
+	delete _Buildings;
+	_Buildings = nullptr;
 	delete _Straight1;
 	_Straight1 = nullptr;
 	_Straight2 = nullptr;
 	_Straight3 = nullptr;
+	delete _Buildings1;
+	_Buildings1 = nullptr;
+	_Buildings2 = nullptr;
+	_Buildings3 = nullptr;
+	_Buildings4 = nullptr;
 }
 
 void Scene::Render()

@@ -18,7 +18,7 @@ uniform vec3 LightPosition_worldspace;
 
 void main(){
 	vec3 LightColour = vec3(1,1,1);
-	float LightPower = 300.0f;
+	float LightPower = 500.0f;
 
 	vec3 MaterialDiffuseColour = texture(myTextureSampler, UV).rgb;
 	vec3 MaterialAmbientColor = vec3(0.1,0.1,0.1) * MaterialDiffuseColour;
@@ -35,4 +35,5 @@ void main(){
 
 	float cosTheta = clamp(dot(n,l), 0, 1);
 	color = MaterialAmbientColor + MaterialDiffuseColour * LightColour * LightPower * cosTheta / (distance * distance) + MaterialSpecularColor * LightColour * LightPower * pow(cosAlpha,5) / (distance*distance);
+	//color = MaterialDiffuseColour;
 }

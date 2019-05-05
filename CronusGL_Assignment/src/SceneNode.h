@@ -43,16 +43,9 @@ public:
 	void AddSibling(SceneNode* node);
 
 	void ComputeLocalTransformMatrix();
+
 	// Matrices Getters/Setters
 	inline const glm::mat4 GetLocalTransform() const { return _LocalTransformMatrix; }
 	inline const glm::mat4 GetWorldTransform() const { return _WorldTransformMatrix; }
 	inline void SetLocalTransform(const glm::mat4 matrix) { _LocalTransformMatrix = matrix; }
-
-	// Object Properties Getters/Setters
-	inline const glm::vec3 GetPosition() const { return _Position; }
-	inline void SetPosition(glm::vec3 position) { _Position = position; }
-	inline const Rotation GetRotation() const { return _Rotation; }
-	inline void SetRotation(Rotation rotation) { _Rotation = rotation; }
-	inline const glm::vec3 GetScale() const { return _Scale; }
-	inline void SetScale(glm::vec3 scale) { _Scale = scale; }
 };
