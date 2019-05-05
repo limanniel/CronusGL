@@ -2,7 +2,7 @@
 #include <list>
 #include <glm.hpp>
 #include <matrix_transform.hpp>
-#include "SceneObject.h"
+#include <type_ptr.hpp>
 #include "Structures.h"
 
 class SceneNode

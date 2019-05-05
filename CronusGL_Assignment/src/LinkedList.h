@@ -1,12 +1,12 @@
 #pragma once
-#include "SceneObject.h"
+#include "SceneNode.h"
 
 class LinkedList
 {
 private:
 	struct Node 
 	{
-		SceneObject* object;
+		SceneNode* object;
 		Node* next;
 	};
 	Node* _nodeHead{ nullptr };
@@ -16,9 +16,9 @@ public:
 	LinkedList();
 	~LinkedList();
 
-	Node* CreateNode(SceneObject* object);
+	Node* CreateNode(SceneNode* object);
 	Node* GetNode(Node* node, int position);
-	Node* FindNode(Node* node, SceneObject* object);
+	Node* FindNode(Node* node, SceneNode* object);
 	Node* InsertNodeFirst(Node* node, Node* newNode);
 	void InsertNodeAfter(Node* node, Node* newNode);
 	void DeleteNodeAfter(Node* node);

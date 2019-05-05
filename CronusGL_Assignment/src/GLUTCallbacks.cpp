@@ -39,4 +39,21 @@ namespace GLUTCallbacks
 	{
 		app->PassiveMouse(x, y);
 	}
+	void MenuCallback(int type)
+	{
+		switch (type)
+		{
+		case 0:
+			app->SetTankCamera(true);
+			break;
+		case 1:
+			app->SetTankCamera(false);
+			break;
+		case 2:
+			glutLeaveMainLoop();
+			break;
+		default:
+			break;
+		}
+	}
 }

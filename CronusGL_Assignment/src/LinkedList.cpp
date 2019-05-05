@@ -13,7 +13,7 @@ LinkedList::~LinkedList()
 	DeleteList(_nodeHead);
 }
 
-LinkedList::Node* LinkedList::CreateNode(SceneObject* object)
+LinkedList::Node* LinkedList::CreateNode(SceneNode* object)
 {
 	Node* newNode = new Node();
 	newNode->object = object;
@@ -37,7 +37,7 @@ LinkedList::Node* LinkedList::GetNode(Node* node, int position)
 	return nullptr;
 }
 
-LinkedList::Node* LinkedList::FindNode(Node* node, SceneObject* object)
+LinkedList::Node* LinkedList::FindNode(Node* node, SceneNode* object)
 {
 	if (node->object == object)
 	{

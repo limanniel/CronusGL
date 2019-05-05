@@ -1,7 +1,7 @@
 #include "Application.h"
 
 Application::Application(int argc, char* argv[])
-	: RefreshRate(16), deltaTime(0.0f), lastFrame(0.0f), model(nullptr)
+	: RefreshRate(16), deltaTime(0.0f), lastFrame(0.0f)
 {
 	// GLUT Init
 	GLUTCallbacks::Init(this);
@@ -23,6 +23,15 @@ Application::Application(int argc, char* argv[])
 	glutSetCursor(GLUT_CURSOR_NONE);
 	glutIgnoreKeyRepeat(1);
 	std::cout << "GLUT initialised successfully!" << std::endl;
+
+	// GLUT menu
+	int menu = glutCreateMenu(GLUTCallbacks::MenuCallback);
+	glutAddMenuEntry("Get into tank", 0);
+	glutAddMenuEntry("Eject Camera", 1);
+	int subMenu = glutCreateMenu(GLUTCallbacks::MenuCallback);
+	glutAddSubMenu("Camera", menu);
+	glutAddMenuEntry("QUIT", 2);
+	glutAttachMenu(GLUT_RIGHT_BUTTON);
 
 	// GLEW Init
 	glewExperimental = true;
@@ -46,9 +55,10 @@ Application::Application(int argc, char* argv[])
 	_programID = ShaderLoader::LoadShaders("src/shaders/SimpleVertexShader.vert", "src/shaders/SimpleFragmentShader.frag");
 
 	// Camera and and Projection Set-Up
-	camera = new Camera;
+	_camera = new Camera;
+	_tankCamera = new Camera_Tank;
 	_projectionMatrix = glm::mat4(1.0f);
-	_projectionMatrix = glm::perspective(glm::radians(45.0f), 4.0f / 3.0f, 0.1f, 100.0f);
+	_projectionMatrix = glm::perspective(glm::radians(45.0f), 4.0f / 3.0f, 0.1f, 1000.0f);
 
 	// Handlers to Shaders
 	_projectionMatrixID = glGetUniformLocation(_programID, "P");
@@ -66,16 +76,12 @@ Application::Application(int argc, char* argv[])
 
 Application::~Application()
 {
-	glDeleteTextures(1, &model->Texture);
-
-	delete model;
-	model = nullptr;
-	delete camera;
-	camera = nullptr;
-	delete _cube;
-	_cube = nullptr;
+	delete _camera;
+	_camera = nullptr;
 	delete _tank;
 	_tank = nullptr;
+	delete _scene;
+	_scene = nullptr;
 
 	glDeleteProgram(_programID);
 	glDeleteVertexArrays(1, &VertexArrayID);
@@ -93,9 +99,8 @@ void Application::Display()
 	glUniform3f(_lightID, _lightPos.x, _lightPos.y, _lightPos.z);
 	glUniform1i(_textureID, 0);
 
-	_cube->Render();
+	_scene->Render();
 	_tank->Render();
-
 
 	// Rebind Buffer to nothing
 	glBindBuffer(GL_ARRAY_BUFFER, 0);
@@ -113,12 +118,29 @@ void Application::Update()
 	lastFrame = currentTime;
 
 	// Update Objects state and assemble MVP Matrix
-	camera->Update(deltaTime);
-	_viewMatrix = camera->GetViewMatrix();
+	
 
-	_cube->Update();
+	if (TANK_CAMERA)
+	{
+		_tankCamera->SetCameraPosition(glm::vec3(_tank->GetTankModelMatrix()[3])); // Extract translation from model matrix
+		_tankCamera->Update(deltaTime);
+	}
+	else
+	{
+		_camera->Update(deltaTime);
+	}
+
+	if (TANK_CAMERA)
+	{
+		_viewMatrix = _tankCamera->GetViewMatrix();
+	}
+	else
+	{
+		_viewMatrix = _camera->GetViewMatrix();
+	}
+
+	_scene->Update();
 	_tank->Update(deltaTime);
-
 	
 	_lightPos = glm::vec3(4, 4, 4);
 
@@ -127,8 +149,11 @@ void Application::Update()
 
 void Application::Keyboard(unsigned char key, int x, int y)
 {
-	camera->UpdateCameraPosition(key);
-	_tank->MoveKeyDown(key);
+	_camera->UpdateCameraPosition(key);
+	if (TANK_CAMERA)
+	{
+		_tank->MoveKeyDown(key);
+	}
 	// Close app when ESC is pressed
 	if (key == 27) {
 		glutLeaveMainLoop();
@@ -137,25 +162,29 @@ void Application::Keyboard(unsigned char key, int x, int y)
 
 void Application::KeyboardUp(unsigned char key, int x, int y)
 {
-	camera->UpdateCameraPositionUp(key);
-	_tank->MoveKeyUp(key);
+	_camera->UpdateCameraPositionUp(key);
+	if (TANK_CAMERA)
+	{
+		_tank->MoveKeyUp(key);
+	}
 }
 
 void Application::PassiveMouse(int x, int y)
 {
-	camera->UpdateCameraDirection(x, y);
+	if (TANK_CAMERA)
+	{
+		_tankCamera->UpdateCameraDirection(x, y);
+		_tank->RotateTurret(x, y);
+	}
+	else
+	{
+		_camera->UpdateCameraDirection(x, y);
+	}
 	glutWarpPointer(400, 400);
 }
 
 void Application::InitObject()
 {
-	model = new Model;
-	model->Mesh = MeshLoaderOBJ::Load("res/models/cube.obj");
-	model->Texture = tex.Load("res/textures/uvtemplate.bmp");
-
-	_cube = new SceneNode_Static(model, vec3(0.0f, 0.0f, -20.0f), Rotation(), vec3(1.0f, 1.0f, 1.0f));
-	_cube2 = new SceneNode_Static(model, vec3(0.0f, 0.0f, -2.0f), Rotation(), vec3(1.0f, 1.0f, 1.0f));
-	_cube->AddChild(_cube2);
-
+	_scene = new Scene;
 	_tank = new Tank;
 }

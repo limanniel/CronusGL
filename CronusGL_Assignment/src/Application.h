@@ -3,18 +3,21 @@
 #include <glew.h>
 #include <freeglut.h>
 #include <iostream>
+#include <matrix_decompose.hpp>
 
 #include "GLUTCallbacks.h"
 #include "ShaderLoader.h"
 #include "LoadTexture2DBMP.h"
 #include "MeshLoaderOBJ.h"
 #include "Camera.h"
+#include "Camera_Tank.h"
 
 #include "LinkedList.h"
 #include "SceneNode_Static.h"
 #include "SceneNode_Dynamic.h"
 
 #include "Tank.h"
+#include "Scene.h"
 
 class Application
 {
@@ -41,14 +44,12 @@ private:
 	glm::mat4 _viewMatrix;
 
 	// Camera
-	Camera* camera;
+	Camera* _camera;
+	Camera_Tank* _tankCamera;
+	bool TANK_CAMERA{ false };
 
-	//Object
-	LoadTexture2DBMP tex;
-	Model* model;
-
-	SceneNode* _cube;
-	SceneNode* _cube2;
+	//Objects
+	Scene* _scene;
 	Tank* _tank;
 
 public:
@@ -62,4 +63,7 @@ public:
 	void PassiveMouse(int x, int y);
 
 	void InitObject();
+
+	inline const bool GetTankCamera() const { return TANK_CAMERA; }
+	inline void SetTankCamera(bool state) { TANK_CAMERA = state; }
 };

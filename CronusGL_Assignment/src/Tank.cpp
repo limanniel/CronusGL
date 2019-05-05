@@ -19,7 +19,7 @@ Tank::Tank()
 	_TankTracksModel->Mesh = MeshLoaderOBJ::Load("res/models/TankTracks.obj");
 	_TankTracksModel->Texture = _TextureManager->Load("res/textures/tankTracks_diffuse.bmp");
 
-	_TankHull = new SceneNode_Dynamic(_TankHullModel, glm::vec3(10.0f, 0.0f, 20.0f));
+	_TankHull = new SceneNode_Dynamic(_TankHullModel, glm::vec3(12.0f, 0.0f, 16.0f));
 	_TankTurret = new SceneNode_Dynamic(_TankTurretModel);
 	_TankTracks = new SceneNode_Dynamic(_TankTracksModel);
 
@@ -51,6 +51,8 @@ void Tank::Render()
 
 void Tank::Update(float deltaTime)
 {
+	_turretRotateSesitivity = 0.010f * deltaTime;
+
 	glm::mat4 tempMat = _TankHull->GetLocalTransform();
 	if (W)
 	{
@@ -67,19 +69,19 @@ void Tank::Update(float deltaTime)
 
 void Tank::MoveKeyDown(unsigned char key)
 {
-	if (key == 't' || key == 'T')
+	if (key == 'w' || key == 'W')
 	{
 		W = true;
 	}
-	else if (key == 'g' || key == 'G')
+	else if (key == 's' || key == 'S')
 	{
 		S = true;
 	}
-	else if (key == 'f' || key == 'F')
+	else if (key == 'a' || key == 'A')
 	{
 		A = true;
 	}
-	else if (key == 'h' || key == 'H')
+	else if (key == 'd' || key == 'D')
 	{
 		D = true;
 	}
@@ -87,20 +89,28 @@ void Tank::MoveKeyDown(unsigned char key)
 
 void Tank::MoveKeyUp(unsigned char key)
 {
-	if (key == 't' || key == 'T')
+	if (key == 'w' || key == 'W')
 	{
 		W = false;
 	}
-	else if (key == 'g' || key == 'G')
+	else if (key == 's' || key == 'S')
 	{
 		S = false;
 	}
-	else if (key == 'f' || key == 'F')
+	else if (key == 'a' || key == 'A')
 	{
 		A = false;
 	}
-	else if (key == 'h' || key == 'H')
+	else if (key == 'd' || key == 'D')
 	{
 		D = false;
 	}
+}
+
+void Tank::RotateTurret(int x, int y)
+{
+	_turretYaw = _turretRotateSesitivity * float(800 / 2 - x);
+	glm::mat4 tempMat = _TankTurret->GetLocalTransform();
+	tempMat = glm::rotate(tempMat, glm::radians(_turretYaw), glm::vec3(0.0f, 1.0f, 0.0f));
+	_TankTurret->SetLocalTransform(tempMat);
 }
