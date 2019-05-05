@@ -62,6 +62,14 @@ void Tank::Update(float deltaTime)
 	{
 		tempMat = glm::translate(tempMat, glm::vec3(0.0f, 0.0f, -1.0f));
 	}
+	if (A)
+	{
+		tempMat = glm::rotate(tempMat, glm::radians(5.0f), glm::vec3(0.0f, 1.0f, 0.0f));
+	}
+	if (D)
+	{
+		tempMat = glm::rotate(tempMat, glm::radians(5.0f), glm::vec3(0.0f, -1.0f, 0.0f));
+	}
 	_TankHull->SetLocalTransform(tempMat);
 
 	_TankHull->Update();

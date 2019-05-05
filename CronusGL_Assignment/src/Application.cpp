@@ -142,7 +142,7 @@ void Application::Update()
 	_scene->Update();
 	_tank->Update(deltaTime);
 	
-	_lightPos = glm::vec3(4, 4, 4);
+	_lightPos = glm::vec3(_tank->GetTankModelMatrix()[3]);
 
 	glutPostRedisplay();
 }

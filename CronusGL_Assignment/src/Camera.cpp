@@ -19,7 +19,7 @@ Camera::~Camera()
 
 void Camera::Update(float deltaTime)
 {
-	_cameraSpeed = 0.025f * deltaTime;
+	_cameraSpeed = 0.05f * deltaTime;
 	_cameraSensitivity = 0.005f * deltaTime;
 
 	if (W) 
