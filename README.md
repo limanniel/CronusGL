@@ -1,6 +1,5 @@
 # CronusGL_Assignment
-
-Assignment for FOGGS module Semester 2, Year 1 of University.
+Core Profile OpenGL application made for "Fundamentals of Game and Graphical Development" module for a first year of my degree
   
 [DEPENDENCIES]
 * FreeGlut
